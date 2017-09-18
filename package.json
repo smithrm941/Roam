@@ -1,0 +1,30 @@
+{
+  "name": "roam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server/server.js",
+  "scripts": {
+    "start": "node src/server/server.js",
+    "db:start": "createdb roam && npm run load_schema",
+    "db:reset": "dropdb roam && createdb roam && npm run load_schema",
+    "load_schema": "psql -d roam < src/models/db/schema/users.sql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zezevazquez/roam.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zezevazquez/roam/issues"
+  },
+  "homepage": "https://github.com/zezevazquez/roam#readme",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "node-pg-migrate": "^2.9.0",
+    "pg-promise": "^6.7.1"
+  }
+}
