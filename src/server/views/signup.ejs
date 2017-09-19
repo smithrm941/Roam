@@ -4,14 +4,14 @@
 <div class="container-fluid">
   <h1>Call to Action!</h1>
 
-  <form method="post" action="/users/:id" class="form-group">
+  <form method="post" action="/signup" class="form-group">
     <label for="email">email</label>
-    <input type="text" class="form-control" id="email" placeholder="email">
+    <input type="text" class="form-control" name="email" placeholder="email">
     <label for="password">password</label>
-    <input type="password" class="form-control" id="password" placeholder="password">
-    <label for="confirm-password">confirm password</label>
-    <input type="password" class="form-control" id="confirm-password" placeholder="confirm password">
-    <a type="submit"  href="/users/:id" class="btn btn-primary">Submit</a>
+    <input type="password" class="form-control" name="password" placeholder="password">
+    <label for="confirmedPassword">confirm password</label>
+    <input type="password" class="form-control" name="confirmedPassword" placeholder="confirm password">
+    <input type="submit" class="btn btn-primary" value="Submit"/>
   </form>
 </div>
 
