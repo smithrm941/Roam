@@ -1,0 +1,19 @@
+<%- include header %>
+<%- include navbar %>
+
+<div class="container-fluid">
+  <h1>Log In!</h1>
+
+  <form method="post" action="/login" class="form-group">
+    <label for="email">email</label>
+      <input type="text" class="form-control" name="email" placeholder="email">
+    <label for="password">password</label>
+      <input type="password" class="form-control" name="password" placeholder="password">
+    <input type="submit" class="btn btn-primary" value="Submit"/>
+    <%if (message) { %>
+      <p><%= message %></p>
+    <% } %>
+  </form>
+</div>
+
+<% include footer %>

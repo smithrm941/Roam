@@ -2,8 +2,8 @@ const express = require('express')
 
 const app = express()
 const bodyParser = require('body-parser')
-
-const user = require('../models/db/db.js')
+const cookieSession = require('cookie-session')
+const usersDb = require('../models/db/db.js')
 
 
 app.set('view engine', 'ejs')
@@ -11,6 +11,11 @@ app.set('views', __dirname + '/views')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}));
 
 app.use(express.static('public'))
 
@@ -28,12 +33,12 @@ app.post('/signup', (req, res) => {
   if(password != confirmedPassword){
     res.render('signup', {message: "Passwords do not match."})
   } else {
-    user.find(email)
-    .then(user => {
-      if(user[0]){
+    usersDb.find(email)
+    .then(users => {
+      if(users[0]){
         res.render('signup', {message: "Account already exists."})
       } else {
-        user.create(email, password)
+        usersDb.createUser(email, password)
           .then(createdUser => {
           return res.redirect('/')
         })
@@ -43,7 +48,29 @@ app.post('/signup', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-  res.render('login')
+  res.render('login', {message: ""})
+})
+
+app.post('/login', (req, res) => {
+  const {email, password} = req.body
+  usersDb.find(email)
+  .then(users => {
+    if(users[0]){
+      let correctPassword = (users[0].password === password)
+      if(correctPassword){
+        req.session.id = email
+        res.render('profile')
+      }
+    } else {
+      res.render('login', {message: "user does not exist."})
+    }
+  })
+})
+
+app.get('/logout', (req, res) => {
+  req.session.id = null;
+  loggedIn === undefined
+  res.redirect('/')
 })
 
 app.get('/users/:id', (req, res) => {
