@@ -3,7 +3,7 @@ const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/
 
 const db = pg(connectionString)
 
-const createUser = (email, password) => {
+const create = (email, password) => {
   return db.query(`
     INSERT INTO
       users (email, password)
@@ -17,4 +17,16 @@ const createUser = (email, password) => {
   ]).catch(error => error)
 }
 
-module.exports =  createUser
+const find = (email) => {
+  return db.query(`
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      email = $1
+    `,
+    [email]).catch(error => error)
+}
+
+module.exports =  {create, find}

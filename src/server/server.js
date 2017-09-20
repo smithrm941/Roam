@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
-const createUser = require('../models/db/db.js')
+const user = require('../models/db/db.js')
 
 
 app.set('view engine', 'ejs')
@@ -20,15 +20,26 @@ app.get('/', (req, res) => {
 })
 
 app.get('/signup', (req, res) => {
-  res.render('signup')
+  res.render('signup', {message: ""})
 })
 
 app.post('/signup', (req, res) => {
   const {email, password, confirmedPassword} = req.body
-  createUser(email, password)
-    .then(createdUser => {
-      return res.redirect('/')
+  if(password != confirmedPassword){
+    res.render('signup', {message: "Passwords do not match."})
+  } else {
+    user.find(email)
+    .then(user => {
+      if(user[0]){
+        res.render('signup', {message: "Account already exists."})
+      } else {
+        user.create(email, password)
+          .then(createdUser => {
+          return res.redirect('/')
+        })
+      }
     })
+  }
 })
 
 app.get('/login', (req, res) => {

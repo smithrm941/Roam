@@ -6,12 +6,15 @@
 
   <form method="post" action="/signup" class="form-group">
     <label for="email">email</label>
-    <input type="text" class="form-control" name="email" placeholder="email">
+      <input type="text" class="form-control" name="email" placeholder="email">
     <label for="password">password</label>
-    <input type="password" class="form-control" name="password" placeholder="password">
+      <input type="password" class="form-control" name="password" placeholder="password">
     <label for="confirmedPassword">confirm password</label>
-    <input type="password" class="form-control" name="confirmedPassword" placeholder="confirm password">
+      <input type="password" class="form-control" name="confirmedPassword" placeholder="confirm password">
     <input type="submit" class="btn btn-primary" value="Submit"/>
+    <%if (message) { %>
+      <p><%= message %></p>
+    <% } %>
   </form>
 </div>
 
