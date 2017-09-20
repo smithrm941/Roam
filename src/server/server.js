@@ -68,8 +68,7 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
-  req.session.id = null;
-  loggedIn === undefined
+  req.session = null;
   res.redirect('/')
 })
 
